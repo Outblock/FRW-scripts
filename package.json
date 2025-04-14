@@ -1,16 +1,13 @@
 {
   "workspaces": [
-    "./scripts/*",
-    "./scriptTest/*",
-    "./transactions/*",
-    "./transactionTest/*",
-    "./temp/*"
+    "./scripts/*"
   ],
   "type": "module",
   "scripts": {
     "build": "pnpm build",
     "changeset": "changeset",
-    "release": "npm run build && npm run changeset publish"
+    "release": "npm run build && npm run changeset publish",
+    "test": "vitest"
   },
   "dependencies": {
     "@changesets/cli": "^2.26.2",
@@ -18,5 +15,11 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "elliptic": "^6.6.1",
+    "sha3": "^2.1.4",
+    "vite": "^6.2.6",
+    "vitest": "^3.1.1"
   }
 }

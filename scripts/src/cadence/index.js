@@ -1,5 +1,11 @@
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
+
+
+// 获取当前文件的目录路径（ES 模块替代__dirname 的方法）
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const fsPromises = fs.promises
 
@@ -16,26 +22,30 @@ const underscoreToCamelCase = (fileName) => {
   return name
 }
 
-const readDirRecursive = async (dirPath, addressMapping) => {
-  // let resolvedPath = path.resolve(dirPath)
-
-  let files = await fsPromises.readdir(dirPath)
+const readDirRecursive = async (dirPath, isScripts = true, addressMapping) => {
+  let resolvedPath = path.resolve(__dirname, dirPath)
+  let files = await fsPromises.readdir(resolvedPath)
 
   for (file of files) {
-    const filePath = path.join(dirPath, file)
+    let filePath = path.join(resolvedPath, file)
 
     let stats = await fsPromises.stat(filePath)
     // console.log(stats)
     if (stats.isDirectory()) {
-      await readDirRecursive(filePath, addressMapping)
+      // if (isScripts && filePath.endsWith('/transaction')) {
+      //   break;
+      // } else if (isScripts && filePath.endsWith('/transaction')) {
+      //   break;
+      // }
+      await readDirRecursive(filePath, isScripts, addressMapping)
     } else {
       if (filePath.indexOf('.cdc') == -1 || filePath.indexOf('_test.cdc') > 0)
         continue
       let fileContent = await fsPromises.readFile(filePath, 'utf8')
       fileContent = replaceAddress(fileContent, addressMapping)
-      // console.log(`Content of ${filePath}: ${data}`)
       const pathArr = filePath.split('/')
-      const key = pathArr[pathArr.length - 2]
+      const key = pathArr[pathArr.length - 3]
+
       let fileName = pathArr[pathArr.length - 1].split('.')[0]
       fileName = underscoreToCamelCase(fileName)
       // const base64Script = base64encode(fileContent)
@@ -52,12 +62,25 @@ const readDirRecursive = async (dirPath, addressMapping) => {
   return cadebceScripts
 }
 
-export const readCadenceScripts = async (path = './', addressMapping) => {
-  return await readDirRecursive(path, addressMapping)
+export const readCadenceScripts = async (path = './cadence', addressMapping) => {
+  return await readDirRecursive(path, true, addressMapping)
 }
 
-export const readScript = async (path, addressMapping) => {
-  const fileContent = await fsPromises.readFile(path, 'utf8')
+
+
+export const readQuery = async (path, addressMapping) => {
+  const pathArr = path.split('/')
+  pathArr.splice(1, 0, 'query')
+  const scriptPath = pathArr.join('/')
+  const fileContent = await fsPromises.readFile(scriptPath, 'utf8')
+  return replaceAddress(fileContent, addressMapping)
+}
+
+export const readTransaction = async (path, addressMapping) => {
+  const pathArr = path.split('/')
+  pathArr.splice(1, 0, 'transaction')
+  const scriptPath = pathArr.join('/')
+  const fileContent = await fsPromises.readFile(scriptPath, 'utf8')
   return replaceAddress(fileContent, addressMapping)
 }
 
