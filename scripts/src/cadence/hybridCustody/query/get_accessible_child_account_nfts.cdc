@@ -4,8 +4,6 @@ import MetadataViews from 0xMetadataViews
 import ViewResolver from 0xMetadataViews
 
 
-// This script iterates through a parent's child accounts, 
-// identifies private paths with an accessible NonFungibleToken.Provider, and returns the corresponding typeIds
 access(all) fun main(addr: Address): AnyStruct {
   let manager = getAuthAccount<auth(Storage) &Account>(addr).storage.borrow<auth(HybridCustody.Manage) &HybridCustody.Manager>(from: HybridCustody.ManagerStoragePath) ?? panic ("manager does not exist")
 

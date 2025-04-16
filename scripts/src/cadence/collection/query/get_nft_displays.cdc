@@ -3,13 +3,13 @@ import MetadataViews from 0xMetadataViews
 import ViewResolver from 0xMetadataViews
 
 access(all) struct ViewInfo {
-access(all) let name: String
-access(all) let description: String
-access(all) let thumbnail: {MetadataViews.File}
-access(all) let rarity: String?
-access(all) let collectionDisplay: MetadataViews.NFTCollectionDisplay?
+  access(all) let name: String
+  access(all) let description: String
+  access(all) let thumbnail: {MetadataViews.File}
+  access(all) let rarity: String?
+  access(all) let collectionDisplay: MetadataViews.NFTCollectionDisplay?
 
-init(name: String, description: String, thumbnail: {MetadataViews.File}, rarity: String?, collectionDisplay: MetadataViews.NFTCollectionDisplay?) {
+  init(name: String, description: String, thumbnail: {MetadataViews.File}, rarity: String?, collectionDisplay: MetadataViews.NFTCollectionDisplay?) {
     self.name = name
     self.description = description
     self.thumbnail = thumbnail
@@ -55,8 +55,8 @@ access(all) fun main(address: Address, pathID: String, tokenIDs: [UInt64]): {UIn
     let resolver = collectionRef!.borrowViewResolver(id: tokenID)
     if resolver != nil {
       if let display = MetadataViews.getDisplay(resolver!) {
-      var rarityDesc: String? = nil
-      if let rarityView = MetadataViews.getRarity(resolver!) {
+        var rarityDesc: String? = nil
+        if let rarityView = MetadataViews.getRarity(resolver!) {
           rarityDesc = rarityView.description
         }
 

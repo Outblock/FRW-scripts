@@ -32,9 +32,9 @@ transaction(address: Address, path: String,  ids: [UInt64] ) {
     ?? panic("Could not borrow receiver reference to the recipient's Vault")
 
     for id in ids {     
-        // Withdraw tokens from the signer's stored vault
-        let nft <- collectionRef.withdraw(withdrawID: id)
-        receiverRef.deposit(token: <- nft)
+      // Withdraw tokens from the signer's stored vault
+      let nft <- collectionRef.withdraw(withdrawID: id)
+      receiverRef.deposit(token: <- nft)
     }
   }
 }

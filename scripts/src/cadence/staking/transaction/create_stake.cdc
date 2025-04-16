@@ -5,15 +5,15 @@ import FlowStakingCollection from 0xFlowStakingCollection
 /// followed by the tokens from the unlocked vault
 
 transaction(nodeID: String, delegatorID: UInt32?, amount: UFix64) {
-    
-    let stakingCollectionRef: auth(FlowStakingCollection.CollectionOwner) &FlowStakingCollection.StakingCollection
+  
+  let stakingCollectionRef: auth(FlowStakingCollection.CollectionOwner) &FlowStakingCollection.StakingCollection
 
-    prepare(account: auth(BorrowValue) &Account) {
-        self.stakingCollectionRef = account.storage.borrow<auth(FlowStakingCollection.CollectionOwner) &FlowStakingCollection.StakingCollection>(from: FlowStakingCollection.StakingCollectionStoragePath)
-            ?? panic("Could not borrow a reference to a StakingCollection in the primary user's account")
-    }
+  prepare(account: auth(BorrowValue) &Account) {
+    self.stakingCollectionRef = account.storage.borrow<auth(FlowStakingCollection.CollectionOwner) &FlowStakingCollection.StakingCollection>(from: FlowStakingCollection.StakingCollectionStoragePath)
+      ?? panic("Could not borrow a reference to a StakingCollection in the primary user's account")
+  }
 
-    execute {
-        self.stakingCollectionRef.stakeNewTokens(nodeID: nodeID, delegatorID: delegatorID, amount: amount)
-    }
+  execute {
+    self.stakingCollectionRef.stakeNewTokens(nodeID: nodeID, delegatorID: delegatorID, amount: amount)
+  }
 }

@@ -1,8 +1,7 @@
 import HybridCustody from 0xHybridCustody
 import FungibleToken from 0xFungibleToken
 
-// This script iterates through a parent's child accounts, 
-// identifies private paths with an accessible FungibleToken.Provider, and returns the corresponding typeIds
+
 access(all) fun main(addr: Address):AnyStruct {
   let account = getAuthAccount<auth(Storage) &Account>(addr)
   let manager = getAuthAccount<auth(Storage) &Account>(addr).storage.borrow<auth(HybridCustody.Manage) &HybridCustody.Manager>(from: HybridCustody.ManagerStoragePath)

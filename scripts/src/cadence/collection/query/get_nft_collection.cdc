@@ -1,4 +1,4 @@
-import NonFungibleToken from 0xNonFungibleToken	
+import NonFungibleToken from 0xNonFungibleToken
 import MetadataViews from 0xMetadataViews
 import ViewResolver from 0xMetadataViews
 
@@ -34,35 +34,34 @@ access(all) fun getDisplay(address: Address, storagePath: StoragePath, publicPat
   let resourceType = Type<@AnyResource>()
   let collectionType = Type<@{NonFungibleToken.Collection}>()
   let metadataViewType = Type<@{ViewResolver.ResolverCollection}>()
-  var item: CollectionDisplay? =  nil
+  var item: CollectionDisplay? = nil
 
-    if let type = account.storage.type(at: storagePath) {
-      let isResource = type.isSubtype(of: resourceType)
-      let isNFTCollection = type.isSubtype(of: collectionType)
-      let conformedMetadataViews = type.isSubtype(of: metadataViewType)
+  if let type = account.storage.type(at: storagePath) {
+    let isResource = type.isSubtype(of: resourceType)
+    let isNFTCollection = type.isSubtype(of: collectionType)
+    let conformedMetadataViews = type.isSubtype(of: metadataViewType)
 
-      var tokenIDs: [UInt64] = []
-      if isNFTCollection && conformedMetadataViews {
-        if let collectionRef = account.capabilities.borrow<&{ViewResolver.ResolverCollection, NonFungibleToken.Receiver}>(publicPath) {
-          tokenIDs = collectionRef.getIDs()
+    var tokenIDs: [UInt64] = []
+    if isNFTCollection && conformedMetadataViews {
+      if let collectionRef = account.capabilities.borrow<&{ViewResolver.ResolverCollection, NonFungibleToken.Receiver}>(publicPath) {
+        tokenIDs = collectionRef.getIDs()
 
-          // TODO: move to a list
-          if tokenIDs.length > 0 {
-            let resolver = collectionRef.borrowViewResolver(id: tokenIDs[0])
-            if resolver != nil {
-                if let display = MetadataViews.getNFTCollectionDisplay(resolver!) {
-                item = CollectionDisplay(
-                  name: display.name,
-                  squareImage: display.squareImage.file.uri(),
-                  mediaType: display.squareImage.mediaType
-                )
-              }
+        // TODO: move to a list
+        if tokenIDs.length > 0 {
+          let resolver = collectionRef.borrowViewResolver(id: tokenIDs[0])
+          if resolver != nil {
+            if let display = MetadataViews.getNFTCollectionDisplay(resolver!) {
+              item = CollectionDisplay(
+                name: display.name,
+                squareImage: display.squareImage.file.uri(),
+                mediaType: display.squareImage.mediaType
+              )
             }
-            
           }
         }
       }
     }
+  }
 
   return item
 }

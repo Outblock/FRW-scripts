@@ -33,5 +33,5 @@ access(all) fun main(parent: Address, child: Address, path: String): Bool {
   }
 
   return flag
-} 
+}
     

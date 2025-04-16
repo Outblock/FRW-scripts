@@ -5,15 +5,14 @@ import FlowStakingCollection from 0xFlowStakingCollection
 /// And then any locked tokens are deposited into the locked account vault
 
 transaction(nodeID: String, delegatorID: UInt32?, amount: UFix64) {
-    
-    let stakingCollectionRef: auth(FlowStakingCollection.CollectionOwner) &FlowStakingCollection.StakingCollection
+  let stakingCollectionRef: auth(FlowStakingCollection.CollectionOwner) &FlowStakingCollection.StakingCollection
 
-    prepare(account: auth(BorrowValue) &Account) {
-        self.stakingCollectionRef = account.storage.borrow<auth(FlowStakingCollection.CollectionOwner) &FlowStakingCollection.StakingCollection>(from: FlowStakingCollection.StakingCollectionStoragePath)
-            ?? panic("Could not borrow a reference to a StakingCollection in the primary user's account")
-    }
+  prepare(account: auth(BorrowValue) &Account) {
+    self.stakingCollectionRef = account.storage.borrow<auth(FlowStakingCollection.CollectionOwner) &FlowStakingCollection.StakingCollection>(from: FlowStakingCollection.StakingCollectionStoragePath)
+      ?? panic("Could not borrow a reference to a StakingCollection in the primary user's account")
+  }
 
-    execute {
-        self.stakingCollectionRef.withdrawRewardedTokens(nodeID: nodeID, delegatorID: delegatorID, amount: amount)
-    }
+  execute {
+    self.stakingCollectionRef.withdrawRewardedTokens(nodeID: nodeID, delegatorID: delegatorID, amount: amount)
+  }
 }
