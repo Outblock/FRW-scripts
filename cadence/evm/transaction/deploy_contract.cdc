@@ -1,4 +1,4 @@
-import EVM from 0x8c5303eaa26202d6
+import EVM from 0xEVM
 
 transaction(code: String) {
   let coa: auth(EVM.Deploy) &EVM.CadenceOwnedAccount

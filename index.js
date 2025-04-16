@@ -4,7 +4,7 @@ import { readCadenceScripts, replaceAddress } from './cadence'
 let scriptsMap = null
 
 export const exportScripts = async (addressMapping = {}) => {
-  scriptsMap = await readCadenceScripts('../src/cadence', addressMapping)
+  scriptsMap = await readCadenceScripts('./', addressMapping)
   return scriptsMap
 }
 
@@ -12,7 +12,7 @@ export const executeQuery = async (scriptPath, args, addressMapping = {}) => {
   try {
     let pathArr = scriptPath.split('/')
     if (scriptsMap == null) {
-      scriptsMap = await readCadenceScripts('../src/cadence')
+      scriptsMap = await readCadenceScripts('./')
     }
 
     let script = scriptsMap[pathArr[0]][pathArr[1]]
@@ -31,7 +31,7 @@ export const executeQuery = async (scriptPath, args, addressMapping = {}) => {
 export const exportScript = async (scriptPath, addressMapping = {}) => {
   let pathArr = scriptPath.split('/')
   if (scriptsMap == null) {
-    scriptsMap = await readCadenceScripts('../src/cadence')
+    scriptsMap = await readCadenceScripts('./')
   }
   let script = scriptsMap[pathArr[0]][pathArr[1]]
   script = replaceAddress(script, addressMapping)
@@ -46,7 +46,7 @@ export const executeTransaction = async (
 ) => {
   let pathArr = path.split('/')
   if (scriptsMap == null) {
-    scriptsMap = await readCadenceScripts('../src/cadence')
+    scriptsMap = await readCadenceScripts('./')
   }
 
   let script = scriptsMap[pathArr[0]][pathArr[1]]

@@ -26,7 +26,7 @@ const readDirRecursive = async (dirPath, isScripts = true, addressMapping) => {
   let resolvedPath = path.resolve(__dirname, dirPath)
   let files = await fsPromises.readdir(resolvedPath)
 
-  for (file of files) {
+  for (let file of files) {
     let filePath = path.join(resolvedPath, file)
 
     let stats = await fsPromises.stat(filePath)
@@ -62,7 +62,7 @@ const readDirRecursive = async (dirPath, isScripts = true, addressMapping) => {
   return cadebceScripts
 }
 
-export const readCadenceScripts = async (path = './cadence', addressMapping) => {
+export const readCadenceScripts = async (path = './', addressMapping) => {
   return await readDirRecursive(path, true, addressMapping)
 }
 

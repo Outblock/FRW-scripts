@@ -1,13 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import dotenv from 'dotenv'
 import * as t from '@onflow/types'
 import fcl from '@onflow/fcl'
 import {
   executeQuery,
   // exportScripts
-} from '@outblock/frw-scripts'
+} from '@/index'
 import { setUpFcl } from '../../utils'
-dotenv.config()
 
 
 describe('Test get account info script', () => {

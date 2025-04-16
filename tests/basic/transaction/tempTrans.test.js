@@ -1,5 +1,4 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import dotenv from 'dotenv'
 import * as t from '@onflow/types'
 import fcl, { authz } from '@onflow/fcl'
 import { getAuthz } from '../../utils/authz.js'
@@ -9,9 +8,8 @@ import {
   executeQuery,
   executeTransaction,
   // exportScripts
-} from '@outblock/frw-scripts'
+} from '@/index'
 import { setUpFcl } from '../../utils'
-dotenv.config()
 
 
 describe('Test empty transaction', () => {
@@ -20,7 +18,7 @@ describe('Test empty transaction', () => {
     setUpFcl()
   })
 
-  it('Empty objects should be returned when version equals updateVersion', async () => {
+  it('Empty transactions test', async () => {
 
     let authz = getAuthz(address, pk)
 
