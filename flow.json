@@ -313,6 +313,14 @@
 				"mainnet": "d8a7e05a7ac670c0",
 				"testnet": "294e44e1ec6993c6"
 			}
+		},
+		"FlowIDTableStaking": {
+			"source": "mainnet://8624b52f9ddcd04a.FlowIDTableStaking",
+			"hash": "c8a129eec11c57ee25487fcce38efc54c3b12eb539ba61a52f4ee620173bb67b",
+			"aliases": {
+				"mainnet": "8624b52f9ddcd04a",
+				"testnet": "294e44e1ec6993c6"
+			}
 		}
 	},
 	"networks": {
